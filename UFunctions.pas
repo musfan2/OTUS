@@ -17,6 +17,7 @@ implementation
 
 // uses
 
+// Решает квадратное уравнение - результат в виде списка корней
 function Solve(A, B, C: Double): TList<Double>;
 var
   D, X1, X2: Double;
@@ -28,7 +29,7 @@ begin
   begin
     // WriteLn('Действительных корней нет');
   end
-  else if D = 0 then
+  else if ABS(D) < 0.00000001 then
   begin
     X1 := (-B / (2 * A));
     Result.Add(X1);
