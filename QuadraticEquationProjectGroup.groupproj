@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1E25EA08-CFE3-49DC-A7D0-5A3F6B1F572B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="QuadraticEquation.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="QuadraticEquationTest.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="QuadraticEquation">
+        <MSBuild Projects="QuadraticEquation.dproj"/>
+    </Target>
+    <Target Name="QuadraticEquation:Clean">
+        <MSBuild Projects="QuadraticEquation.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="QuadraticEquation:Make">
+        <MSBuild Projects="QuadraticEquation.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="QuadraticEquationTest">
+        <MSBuild Projects="QuadraticEquationTest.dproj"/>
+    </Target>
+    <Target Name="QuadraticEquationTest:Clean">
+        <MSBuild Projects="QuadraticEquationTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="QuadraticEquationTest:Make">
+        <MSBuild Projects="QuadraticEquationTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="QuadraticEquation;QuadraticEquationTest"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="QuadraticEquation:Clean;QuadraticEquationTest:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="QuadraticEquation:Make;QuadraticEquationTest:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
