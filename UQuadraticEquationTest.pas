@@ -3,7 +3,7 @@
 interface
 
 uses
-  DUnitX.TestFramework, System.Generics.Collections, UFunctions;
+  DUnitX.TestFramework, System.Generics.Collections, UFunctions, Math;
 
 type
 
@@ -22,7 +22,7 @@ type
     // подобрать такие коэффициенты квадратного уравнения для случая одного корня кратности два,
     // чтобы дискриминант был отличный от нуля, но меньше заданного эпсилон.Эти коэффициенты должны заменить коэффициенты в
     // тесте из п.7.
-    [TestCase('Test4', '1,2,1')]
+    [TestCase('Test4', '1,2.000000001,1')]
     procedure Test2(const A: Double; const B: Double; const C: Double);
 
     [Test]
@@ -30,6 +30,8 @@ type
     [TestCase('Test3', '0,2,1')]
     // Передаём NaN - должна быть ошибка
     [TestCase('Test5', 'NaN,NaN,NaN')]
+    // Передаём строку (как пример не правильного типа) - должна быть ошибка
+    [TestCase('Test6', 'sdf,пар,2ап')]
     procedure Test3(const A: Double; const B: Double; const C: Double);
   end;
 
@@ -50,8 +52,8 @@ procedure TMyTestObject.Test2(const A, B, C: Double);
 var
   Res: TList<Double>;
 begin
-  Res := Solve(A, B, C);
-  if (Res.Count = 1) and (Res[0] = -1) then
+  Res := Solve(A, B, C); // Сравниваем целые числа с точностью до 6 знаков
+  if (Res.Count = 1) and (Round(Res[0] * 1000000) = -1000000) then
     Assert.Pass('OK!')
   else
     Assert.Fail('Результат не соотвествует ожидаемому!')
@@ -61,14 +63,14 @@ procedure TMyTestObject.Test3(const A, B, C: Double);
 var
   Res: TList<Double>;
 begin
-  Try
+  try
     Res := Solve(A, B, C);
-  Except
+  except
     Res := nil;
-    Assert.Pass('OK!')
-  End;
+    Assert.Pass('OK!'); // Ошибка тут - это НОРМАЛЬНО, согласно ТЗ
+  end;
 
-  if Assigned(Res) then
+  if Assigned(Res) then // А вот если выполнился успешно - то это ОШИБКА
     Assert.Fail('Результат не соотвествует ожидаемому!')
 end;
 

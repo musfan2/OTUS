@@ -25,7 +25,7 @@ begin
   Result := TList<Double>.Create;
 
   D := ((B * B) - (4 * A * C));
-  if Round(D * 10000000) < 0 then // Сравниваем целые числа
+  if Round(D * 10000000) < 0 then // Сравниваем целые числа вместо Double (epsilon - 0.00000001)
   begin // Дискременант менше 0 - нет корней
     // WriteLn('Действительных корней нет');
   end
