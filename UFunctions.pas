@@ -25,17 +25,17 @@ begin
   Result := TList<Double>.Create;
 
   D := ((B * B) - (4 * A * C));
-  if D < 0 then
-  begin
+  if Round(D * 10000000) < 0 then // Сравниваем целые числа
+  begin // Дискременант менше 0 - нет корней
     // WriteLn('Действительных корней нет');
   end
-  else if ABS(D) < 0.00000001 then
-  begin
+  else if ABS(D) < 0.00000001 then // Сравниваем Double с учётом погрешности
+  begin // Дискременант равен 0 - 1 корень
     X1 := (-B / (2 * A));
     Result.Add(X1);
     // WriteLn('Один действительный корень Х = ' + FloatToStr(X1));
   end
-  else
+  else // Дискременант больше 0 - 2 корня
   begin
     X1 := ((-B + sqrt(D)) / (2 * A));
     X2 := ((-B - sqrt(D)) / (2 * A));
